@@ -14,6 +14,10 @@
 Route::get('/', 'PagesController@root')->name('root');
 // 添加邮箱验证中间件：->middleware('verified')
 
+Route::group(['middleware' => ['auth', 'verified']], function() {
+    Route::get('user_addresses', 'UserAddressesController@index')->name('user_addresses.index');
+});
+
 
 
 Auth::routes(['verify' => true]);
