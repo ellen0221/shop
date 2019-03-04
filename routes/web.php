@@ -12,9 +12,8 @@
 */
 
 Route::get('/', 'PagesController@root')->name('root');
+// 添加邮箱验证中间件：->middleware('verified')
 
 
 
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
+Auth::routes(['verify' => true]);
