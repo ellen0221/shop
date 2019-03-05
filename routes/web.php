@@ -11,7 +11,7 @@
 |
 */
 
-Route::get('/', 'PagesController@root')->name('root');
+//Route::get('/', 'PagesController@root')->name('root');
 // 添加邮箱验证中间件：->middleware('verified')
 
 Route::group(['middleware' => ['auth', 'verified']], function() {
@@ -29,6 +29,8 @@ Route::group(['middleware' => ['auth', 'verified']], function() {
     Route::delete('user_addresses/{user_address}', 'UserAddressesController@destroy')->name('user_addresses.destroy');
 });
 
+Route::redirect('/', '/products')->name('root');
+Route::get('products', 'ProductsController@index')->name('products.index');
 
 
 Auth::routes(['verify' => true]);
