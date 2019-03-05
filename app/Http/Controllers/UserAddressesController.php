@@ -40,4 +40,44 @@ class UserAddressesController extends Controller
         return redirect()->route('user_addresses.index');
     }
 
+    // 编辑地址页面
+    public function edit(UserAddress $user_address)
+    {
+        // 用户权限校验
+        $this->authorize('own', $user_address);
+
+        return view('user_addresses.create_and_edit', ['address' => $user_address]);
+    }
+
+    // 修改地址
+    public function update(UserAddress $user_address, UserAddressRequest $request)
+    {
+        // 用户权限校验
+        $this->authorize('own', $user_address);
+
+        $user_address->update($request->only([
+            'province',
+            'city',
+            'district',
+            'address',
+            'zip',
+            'contact_name',
+            'contact_phone',
+        ]));
+
+        return redirect()->route('user_addresses.index');
+    }
+
+    // 删除地址
+    public function destroy(UserAddress $user_address)
+    {
+        // 用户权限校验
+        $this->authorize('own', $user_address);
+
+        $user_address->delete();
+
+        // return redirect()->route('user_addresses.index');
+        return [];  // 请求方式变为AJAX请求，因此改为返回空数组
+    }
+
 }

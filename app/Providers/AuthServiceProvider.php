@@ -4,6 +4,8 @@ namespace App\Providers;
 
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use App\Models\UserAddress;
+use App\Models\UserAddressPolicy;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -14,6 +16,8 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         'App\Model' => 'App\Policies\ModelPolicy',
+        // 注册用户修改地址的授权
+        UserAddress::class => UserAddressPolicy::class,
     ];
 
     /**
