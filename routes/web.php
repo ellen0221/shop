@@ -14,6 +14,10 @@
 //Route::get('/', 'PagesController@root')->name('root');
 // 添加邮箱验证中间件：->middleware('verified')
 
+// 若把路由: Route::get('products/{product}', 'ProductsController@show')->name('products.show'); 放在收藏商品列表路由的前面则：
+// Laravel 在匹配路由的时候会按定义的顺序依次查找，找到第一个匹配的路由就返回。
+// 所以当我们访问这个 URL 的时候会先匹配到商品详情页这个路由，然后把 favorites 当成商品 ID 去数据库查找，查不到对应的商品就抛出了不存在的异常。
+
 Route::group(['middleware' => ['auth', 'verified']], function() {
     // 收货地址页面
     Route::get('user_addresses', 'UserAddressesController@index')->name('user_addresses.index');
@@ -32,6 +36,8 @@ Route::group(['middleware' => ['auth', 'verified']], function() {
     Route::post('products/{product}/favorite', 'ProductsController@favor')->name('products.favor');
     // 取消收藏
     Route::delete('products/{product}/favorite', 'ProductsController@disfavor')->name('products.disfavor');
+    // 收藏商品列表
+    Route::get('products/favorites', 'ProductsController@favorites')->name('products.favorites');
 });
 
 Route::redirect('/', '/products')->name('root');
