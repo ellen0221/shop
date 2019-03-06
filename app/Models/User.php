@@ -51,6 +51,12 @@ class User extends Authenticatable implements MustVerifyEmail
             ->orderBy('user_favorite_products.created_at','desc');
     }
 
+    // 与购物车商品一对多关联
+    public function cartItems()
+    {
+        return $this->hasMany(CartItem::class);
+    }
+
     //
 
 }
